@@ -53,12 +53,12 @@ public class StockMain {
             case 2 -> localDate = LocalDate.now().minusDays(3).toString();
             case 1 -> localDate = LocalDate.now().minusDays(2).toString();
         }
-        switch (new Scanner(System.in).nextInt()) {
-            case 1 -> System.out.println("Opening price : " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("1. open"));
-            case 2 -> System.out.println("Closing price : " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("4. close"));
-            case 3 -> System.out.println("High price : " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("2. high"));
-            case 4 -> System.out.println("Low price : " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("3. low"));
-            case 5 -> System.out.println("Volume price : " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("5. volume"));
-        }
+        System.out.println("\nAll the stock details of " + symbol + " is listed below for the last market open date " + localDate);
+        System.out.println("\nOpening price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("1. open"));
+        System.out.println("Closing price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("4. close"));
+        System.out.println("High price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("2. high"));
+        System.out.println("Low price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("3. low"));
+        System.out.println("Volumes -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("5. volume"));
+
     }
 }
