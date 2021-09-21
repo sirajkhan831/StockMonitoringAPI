@@ -4,14 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class StockMain {
@@ -49,12 +47,13 @@ public class StockMain {
         Gson gson = new Gson();
         JsonObject object = gson.fromJson(response.body(), JsonObject.class);
         System.out.println("Press for :  1. Opening Price 2. Closing Price 3. High 4. Low 5. Volume ");
+        String localDate = LocalDate.now().minusDays(1).toString();
         switch (new Scanner(System.in).nextInt()) {
-            case 1 -> System.out.println("Opening price : " + object.get("Time Series (60min)").getAsJsonObject().get("2021-09-17 20:00:00").getAsJsonObject().get("1. open"));
-            case 2 -> System.out.println("Closing price : " + object.get("Time Series (60min)").getAsJsonObject().get("2021-09-17 20:00:00").getAsJsonObject().get("4. close"));
-            case 3 -> System.out.println("High price : " + object.get("Time Series (60min)").getAsJsonObject().get("2021-09-17 20:00:00").getAsJsonObject().get("2. high"));
-            case 4 -> System.out.println("Low price : " + object.get("Time Series (60min)").getAsJsonObject().get("2021-09-17 20:00:00").getAsJsonObject().get("3. low"));
-            case 5 -> System.out.println("Volume price : " + object.get("Time Series (60min)").getAsJsonObject().get("2021-09-17 20:00:00").getAsJsonObject().get("5. volume"));
+            case 1 -> System.out.println("Opening price : " + object.get("Time Series (60min)").getAsJsonObject().get(""+localDate+" 05:00:00").getAsJsonObject().get("1. open"));
+            case 2 -> System.out.println("Closing price : " + object.get("Time Series (60min)").getAsJsonObject().get(""+localDate+" 05:00:00").getAsJsonObject().get("4. close"));
+            case 3 -> System.out.println("High price : " + object.get("Time Series (60min)").getAsJsonObject().get(""+localDate+" 05:00:00").getAsJsonObject().get("2. high"));
+            case 4 -> System.out.println("Low price : " + object.get("Time Series (60min)").getAsJsonObject().get(""+localDate+" 05:00:00").getAsJsonObject().get("3. low"));
+            case 5 -> System.out.println("Volume price : " + object.get("Time Series (60min)").getAsJsonObject().get(""+localDate+" 05:00:00").getAsJsonObject().get("5. volume"));
         }
     }
 }
