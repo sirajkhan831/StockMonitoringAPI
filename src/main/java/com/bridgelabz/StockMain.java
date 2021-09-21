@@ -47,17 +47,17 @@ public class StockMain {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         Gson gson = new Gson();
         JsonObject object = gson.fromJson(response.body(), JsonObject.class);
-        String localDate = LocalDate.now().minusDays(1).toString();
-        switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-            case 2 -> localDate = LocalDate.now().minusDays(3).toString();
-            case 1 -> localDate = LocalDate.now().minusDays(2).toString();
+        String refresh = object.get("Meta Data").getAsJsonObject().get("3. Last Refreshed").getAsString();
+        try {
+            System.out.println("\nAll the stock details of " + symbol + " is listed below for the last market open date " + refresh.substring(0,10));
+            System.out.println("\nOpening price -> " + object.get("Time Series (60min)").getAsJsonObject().get(refresh).getAsJsonObject().get("1. open"));
+            System.out.println("Closing price -> " + object.get("Time Series (60min)").getAsJsonObject().get(refresh).getAsJsonObject().get("4. close"));
+            System.out.println("High price -> " + object.get("Time Series (60min)").getAsJsonObject().get(refresh).getAsJsonObject().get("2. high"));
+            System.out.println("Low price -> " + object.get("Time Series (60min)").getAsJsonObject().get(refresh).getAsJsonObject().get("3. low"));
+            System.out.println("Volumes -> " + object.get("Time Series (60min)").getAsJsonObject().get(refresh).getAsJsonObject().get("5. volume"));
+        }catch (NullPointerException e)
+        {
+            System.out.println("Sorry the given stock symbol isn't registered with the API");
         }
-        System.out.println("\nAll the stock details of " + symbol + " is listed below for the last market open date " + localDate);
-        System.out.println("\nOpening price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("1. open"));
-        System.out.println("Closing price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("4. close"));
-        System.out.println("High price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("2. high"));
-        System.out.println("Low price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("3. low"));
-        System.out.println("Volumes -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("5. volume"));
-
     }
 }
