@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class StockMain {
     public static void main(String[] args) throws IOException, InterruptedException {
-        String apiKey = "S553X1Y9BFCAP8YP";
+        String apiKey = "UFR1P6WOBTSIH4J8";
         System.out.println("Welcome to the NYSE stock market real time data monitor");
         System.out.println("NOTE : You need to create an API key for this program to work. The default API Key included in this program can only work 5 times a day");
         System.out.print("To use the default API key press 1 (may not work depending on number of usage per day) or To create a new API key press 2 : ");
@@ -47,14 +47,13 @@ public class StockMain {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         Gson gson = new Gson();
         JsonObject object = gson.fromJson(response.body(), JsonObject.class);
-        System.out.println("Press for :  1. Opening Price 2. Closing Price 3. High 4. Low 5. Volume ");
         String localDate = LocalDate.now().minusDays(1).toString();
         switch (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
             case 2 -> localDate = LocalDate.now().minusDays(3).toString();
             case 1 -> localDate = LocalDate.now().minusDays(2).toString();
         }
         System.out.println("\nAll the stock details of " + symbol + " is listed below for the last market open date " + localDate);
-        System.out.println("\nqOpening price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("1. open"));
+        System.out.println("\nOpening price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("1. open"));
         System.out.println("Closing price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("4. close"));
         System.out.println("High price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("2. high"));
         System.out.println("Low price -> " + object.get("Time Series (60min)").getAsJsonObject().get("" + localDate + " 05:00:00").getAsJsonObject().get("3. low"));
