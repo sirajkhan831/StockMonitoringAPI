@@ -1,3 +1,3 @@
 # StockMonitoringAPI
 
-Real time NYSE stock price finder using AlphaVantageAPI
+Real time BSE stock price finder using AlphaVantageAPI
